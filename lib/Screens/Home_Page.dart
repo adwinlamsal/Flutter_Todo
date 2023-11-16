@@ -1,11 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todoapp/Model/Model_class.dart';
 import 'package:todoapp/Widgets/Todo_Widgets.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+
+late TextEditingController controller;
+
+
+List<ModelClass> todolistiteam=[];
+
+
+
+
+@override
+  void initState() {
+
+
+//initilizing text editing controller
+
+
+   controller=TextEditingController();
+    super.initState();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFEEEFF5),
       body: Container(
         child: ListView(
           children: [
@@ -14,8 +46,8 @@ class HomePage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.menu,
                       size: 30,
@@ -24,9 +56,9 @@ class HomePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      height: MediaQuery.of(context).size.height * 0.08,
                       width: MediaQuery.of(context).size.width * 0.1,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: Colors.white),
                       child: Icon(Icons.person),
                     ),
@@ -41,14 +73,14 @@ class HomePage extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white),
-                child: Row(
+                child: const Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Icon(Icons.search),
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Icon(Icons.person),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
+                      padding: EdgeInsets.only(left: 8.0),
                       child: Text(
                         "Search",
                         style: TextStyle(fontSize: 20),
@@ -58,8 +90,8 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 "All ToDos",
                 style: TextStyle(fontSize: 40),
@@ -67,7 +99,7 @@ class HomePage extends StatelessWidget {
             ),
             TodoItem(),
             Container(
-              height: 50,
+              height: MediaQuery.of(context).size.height*0.1,
               width: 500,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +109,8 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Container(
                         height: 50,
-                        child: CupertinoTextField(
+                        child:  CupertinoTextField(
+                          controller: controller,
                           placeholder: "Add a new Todo Iteam",
                         ),
                       ),
@@ -85,16 +118,24 @@ class HomePage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.deepPurple,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
+                    child: GestureDetector(
+                      onTap: (){
+
+                     
+
+
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   )
