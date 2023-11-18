@@ -1,14 +1,26 @@
-
 import 'package:timestamp_to_string/timestamp_to_string.dart';
-class ModelClass {
 
-String ? description;
+class Model {
+    String description;
+    bool check;
+   
 
-bool check= false;
+    Model({
+        required this.description,
+        required this.check,
+      
+    });
 
-TimestampToString ? dateTime;
+    factory Model.fromMap(Map<String, dynamic> json) => Model(
+        description: json["description"],
+        check: json["check"],
+       
+    );
 
-
-ModelClass(this.description,this.check,this.dateTime);
-
-}
+    Map<String, dynamic> toMap() => {
+        "description": description,
+        "check": check
+       
+    };
+    
+    }

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/Model/Model_class.dart';
 import 'package:custom_alert_dialog_box/custom_alert_dialog_box.dart';
 import 'package:timestamp_to_string/timestamp_to_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,11 +18,26 @@ class _HomePageState extends State<HomePage> {
   late TextEditingController controller;
   late TextEditingController editcontroller;
 
-  List<ModelClass> todolistiteam = [];
+  late SharedPreferences preferences;
+
+  List<Model> todolistiteam = [];
+  List<String> listofvalue = [];
+
+  Map mapvalue = {};
+
+  List<String>? listofstring;
+
+  Initilize() async {
+    preferences = await SharedPreferences.getInstance();
+
+    List<String>? cominglist = await preferences.getStringList("value");
+
 
   @override
   void initState() {
 //initilizing text editing controller
+
+    Initilize();
 
     controller = TextEditingController();
     editcontroller = TextEditingController();
@@ -32,7 +50,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFFEEEFF5),
       body: SafeArea(
         child: Container(
-    
           child: Column(
             children: [
               Expanded(
@@ -50,12 +67,21 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width * 0.1,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
-                          child: Icon(Icons.person),
+                        child: GestureDetector(
+                          onTap: () {
+                            listofvalue = todolistiteam
+                                .map((e) => jsonEncode(e.toMap()))
+                                .toList();
+
+                            preferences.setStringList("value", listofvalue);
+                          },
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.08,
+                            width: MediaQuery.of(context).size.width * 0.1,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.white),
+                            child: Icon(Icons.person),
+                          ),
                         ),
                       )
                     ],
@@ -129,8 +155,8 @@ class _HomePageState extends State<HomePage> {
                                                     .description
                                                     .toString(),
                                                 style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.lineThrough,
+                                                  decoration: TextDecoration
+                                                      .lineThrough,
                                                 ),
                                               )
                                             : Text(todolistiteam[index]
@@ -138,15 +164,15 @@ class _HomePageState extends State<HomePage> {
                                                 .toString()),
                                       ],
                                     ),
-                                    Text(
-                                        "${todolistiteam[index].dateTime!.timestamp}")
                                   ],
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
                                       child: GestureDetector(
                                         onTap: () async {
                                           await CustomAlertDialogBox
@@ -159,7 +185,8 @@ class _HomePageState extends State<HomePage> {
                                                     height: 50,
                                                     width: 200,
                                                     child: TextFormField(
-                                                      controller: editcontroller,
+                                                      controller:
+                                                          editcontroller,
                                                     ),
                                                   ),
                                                   GestureDetector(
@@ -171,18 +198,18 @@ class _HomePageState extends State<HomePage> {
                                                     child: Container(
                                                       decoration: BoxDecoration(
                                                           borderRadius:
-                                                              BorderRadius.circular(
-                                                                  10),
+                                                              BorderRadius
+                                                                  .circular(10),
                                                           color: Colors.blue),
                                                       child: Padding(
                                                           padding:
-                                                              const EdgeInsets.all(
-                                                                  8.0),
+                                                              const EdgeInsets
+                                                                  .all(8.0),
                                                           child: Text(
                                                             "Done",
                                                             style: TextStyle(
-                                                                color:
-                                                                    Colors.white),
+                                                                color: Colors
+                                                                    .white),
                                                           )),
                                                     ),
                                                   ),
@@ -208,14 +235,15 @@ class _HomePageState extends State<HomePage> {
                                     GestureDetector(
                                       onTap: () {
                                         todolistiteam.removeAt(index);
-                    
+
                                         setState(() {});
                                       },
                                       child: Container(
                                         height: 40,
                                         width: 40,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             color: Colors.red),
                                         child: const Icon(
                                           Icons.delete,
@@ -235,7 +263,6 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 flex: 1,
                 child: Container(
-                
                   width: 500,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -253,14 +280,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            todolistiteam.add(ModelClass(
-                                controller.text, false, TimestampToString.now()));
-                    
+                            todolistiteam.add(Model(
+                                description: controller.text, check: false));
+
                             controller.clear();
-                    
+
                             setState(() {});
                           },
                           child: Container(
