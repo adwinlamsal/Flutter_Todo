@@ -32,6 +32,13 @@ class _HomePageState extends State<HomePage> {
 
     List<String>? cominglist = await preferences.getStringList("value");
 
+    
+  todolistiteam =   cominglist!.map((e) => Model.fromMap(json.decode(e))).toList();
+setState(() {
+  
+});
+
+  }
 
   @override
   void initState() {
