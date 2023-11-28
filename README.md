@@ -1,6 +1,13 @@
-# todoapp
+# Todo app Completed
 
-A new Flutter project.
+Features:
+
+- Homescreen
+- Task Creation
+- Task Editing
+- Task Deletion
+- Local Data Storage using shared preferences
+
 
 ## Getting Started
 
