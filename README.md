@@ -8,7 +8,7 @@ Features:
 - Task Deletion
 - Local Data Storage using shared preferences
 
-<img align="right" alt="coding" width="400" src="https://github.com/balkrishnalamsal/codsoft_intern_todoapp/raw/master/1128.gif">
+<img align="center" alt="coding" width="100" src="https://github.com/balkrishnalamsal/codsoft_intern_todoapp/raw/master/1128.gif">
 
 
 ## Getting Started
