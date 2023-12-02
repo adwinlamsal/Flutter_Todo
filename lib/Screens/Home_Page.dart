@@ -8,6 +8,7 @@ import 'package:custom_alert_dialog_box/custom_alert_dialog_box.dart';
 import 'package:timestamp_to_string/timestamp_to_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -33,12 +34,9 @@ class _HomePageState extends State<HomePage> {
 
     List<String>? cominglist = await preferences.getStringList("value");
 
-    
-  todolistiteam =   cominglist!.map((e) => Model.fromMap(json.decode(e))).toList();
-setState(() {
-  
-});
-
+    todolistiteam =
+        cominglist!.map((e) => Model.fromMap(json.decode(e))).toList();
+    setState(() {});
   }
 
   @override
@@ -54,177 +52,198 @@ setState(() {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFEEEFF5),
-      body: SafeArea(
-        child: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.menu,
-                          size: 30,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            listofvalue = todolistiteam
-                                .map((e) => jsonEncode(e.toMap()))
-                                .toList();
-
-                            preferences.setStringList("value", listofvalue);
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.08,
-                            width: MediaQuery.of(context).size.width * 0.1,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            child: Icon(Icons.person),
+    return WillPopScope(onWillPop: _onBackPressed,
+      child: Scaffold(
+        backgroundColor: Color(0xFFEEEFF5),
+        body: SafeArea(
+          child: Container(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.menu,
+                            size: 30,
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: const Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Icon(Icons.person),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          "Search",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "All ToDos",
-                  style: TextStyle(fontSize: 40),
-                ),
-              ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  child: ListView.builder(
-                      itemCount: todolistiteam.length,
-                      itemBuilder: (BuildContext, index) {
-                        return Padding(
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 70,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Checkbox(
-                                            value: todolistiteam[index].check,
-                                            onChanged: (onChanged) {
-                                              todolistiteam[index].check =
-                                                  onChanged!;
-                                              setState(() {});
-                                            }),
-                                        (todolistiteam[index].check == true)
-                                            ? Text(
-                                                todolistiteam[index]
-                                                    .description
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  decoration: TextDecoration
-                                                      .lineThrough,
+                          child: GestureDetector(
+                            onTap: () {
+                              listofvalue = todolistiteam
+                                  .map((e) => jsonEncode(e.toMap()))
+                                  .toList();
+    
+                              preferences.setStringList("value", listofvalue);
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
+                              child: Icon(Icons.person),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white),
+                    child: const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Icon(Icons.person),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            "Search",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "All ToDos",
+                    style: TextStyle(fontSize: 40),
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    child: ListView.builder(
+                        itemCount: todolistiteam.length,
+                        itemBuilder: (BuildContext, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 70,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Checkbox(
+                                              value: todolistiteam[index].check,
+                                              onChanged: (onChanged) {
+                                                todolistiteam[index].check =
+                                                    onChanged!;
+                                                setState(() {});
+                                              }),
+                                          (todolistiteam[index].check == true)
+                                              ? Text(
+                                                  todolistiteam[index]
+                                                      .description
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                )
+                                              : Text(todolistiteam[index]
+                                                  .description
+                                                  .toString()),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            await CustomAlertDialogBox
+                                                .showCustomAlertBox(
+                                              context: context,
+                                              willDisplayWidget: Container(
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 50,
+                                                      width: 200,
+                                                      child: TextFormField(
+                                                        controller:
+                                                            editcontroller,
+                                                      ),
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        todolistiteam[index]
+                                                                .description =
+                                                            editcontroller.text;
+                                                      },
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10),
+                                                            color: Colors.blue),
+                                                        child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Text(
+                                                              "Done",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            )),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              )
-                                            : Text(todolistiteam[index]
-                                                .description
-                                                .toString()),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          await CustomAlertDialogBox
-                                              .showCustomAlertBox(
-                                            context: context,
-                                            willDisplayWidget: Container(
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    height: 50,
-                                                    width: 200,
-                                                    child: TextFormField(
-                                                      controller:
-                                                          editcontroller,
-                                                    ),
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      todolistiteam[index]
-                                                              .description =
-                                                          editcontroller.text;
-                                                    },
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color: Colors.blue),
-                                                      child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Text(
-                                                            "Done",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
-                                                          )),
-                                                    ),
-                                                  ),
-                                                ],
                                               ),
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.blue),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
                                             ),
-                                          );
+                                          ),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          todolistiteam.removeAt(index);
+    
+                                          setState(() {});
                                         },
                                         child: Container(
                                           height: 40,
@@ -232,102 +251,79 @@ setState(() {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: Colors.blue),
+                                              color: Colors.red),
                                           child: const Icon(
-                                            Icons.edit,
+                                            Icons.delete,
                                             color: Colors.white,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        todolistiteam.removeAt(index);
-
-                                        setState(() {});
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.red),
-                                        child: const Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  width: 500,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Container(
-                            height: 50,
-                            child: CupertinoTextField(
-                              controller: controller,
-                              placeholder: "Add a new Todo Iteam",
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            todolistiteam.add(Model(
-                                description: controller.text, check: false));
-
-                            controller.clear();
-
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.deepPurple,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                          );
+                        }),
                   ),
                 ),
-              )
-            ],
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    width: 500,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Container(
+                              height: 50,
+                              child: CupertinoTextField(
+                                controller: controller,
+                                placeholder: "Add a new Todo Iteam",
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              todolistiteam.add(Model(
+                                  description: controller.text, check: false));
+    
+                              controller.clear();
+    
+                              setState(() {});
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.deepPurple,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-
- Future<bool> _onBackPressed() async {
-
-
-
+  Future<bool> _onBackPressed() async {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -356,15 +352,11 @@ setState(() {
                     color: Colors.black, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
+                todolistiteam.forEach((element) {
+                  listofvalue.add(json.encode(element.toMap()));
+                });
 
-  todolistiteam.forEach((element) {
-      listofvalue.add(json.encode(element.toMap()));
-    });
-
-    preferences.setStringList("value", listofvalue);
-
-
-
+                preferences.setStringList("value", listofvalue);
 
                 Navigator.of(context).pop(false);
               },
@@ -376,26 +368,13 @@ setState(() {
                     color: Colors.red, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
+                todolistiteam.forEach((element) {
+                  listofvalue.add(json.encode(element.toMap()));
+                });
 
-
-  todolistiteam.forEach((element) {
-      listofvalue.add(json.encode(element.toMap()));
-    });
-
-    preferences.setStringList("value", listofvalue);
-
-
-
-
-
+                preferences.setStringList("value", listofvalue);
 
                 SystemNavigator.pop();
-
-
-
-
-
-
               },
             )
           ],
@@ -403,11 +382,4 @@ setState(() {
       },
     ) as bool;
   }
-
-
-
-
-
-
-
 }
