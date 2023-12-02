@@ -52,6 +52,7 @@ dev_dependencies:
   custom_alert_dialog_box: ^1.0.2
   timestamp_to_string: ^0.0.1
   shared_preferences: ^2.2.2
+  google_fonts:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
