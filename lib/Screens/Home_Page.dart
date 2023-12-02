@@ -32,12 +32,9 @@ class _HomePageState extends State<HomePage> {
 
     List<String>? cominglist = await preferences.getStringList("value");
 
-    
-  todolistiteam =   cominglist!.map((e) => Model.fromMap(json.decode(e))).toList();
-setState(() {
-  
-});
-
+    todolistiteam =
+        cominglist!.map((e) => Model.fromMap(json.decode(e))).toList();
+    setState(() {});
   }
 
   @override
@@ -49,6 +46,29 @@ setState(() {
     controller = TextEditingController();
     editcontroller = TextEditingController();
     super.initState();
+  }
+
+
+
+
+
+  @override
+  void dispose() {
+          print(todolistiteam);
+
+                            listofvalue = todolistiteam.map((e) {
+
+                              print(e.description);
+
+
+                              return json.encode(e.toMap());
+
+
+
+                            }).toList();
+
+                            preferences.setStringList("value", listofvalue);
+    super.dispose();
   }
 
   @override
@@ -76,9 +96,18 @@ setState(() {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            listofvalue = todolistiteam
-                                .map((e) => jsonEncode(e.toMap()))
-                                .toList();
+                            print(todolistiteam);
+
+                            listofvalue = todolistiteam.map((e) {
+
+                              print(e.description);
+
+
+                              return json.encode(e.toMap());
+
+
+
+                            }).toList();
 
                             preferences.setStringList("value", listofvalue);
                           },
